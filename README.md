@@ -1,4 +1,4 @@
-Spacebar Installation
+# Spacebar Installation
 
 ```
 composer install
