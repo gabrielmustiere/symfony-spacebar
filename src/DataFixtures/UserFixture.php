@@ -23,5 +23,7 @@ class UserFixture extends BaseFixture
 
             return $user;
         });
+
+        $manager->flush();
     }
 }
