@@ -3,8 +3,9 @@
 namespace App\Security;
 
 use App\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -15,19 +16,21 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
  */
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
-    /**
-     * @var UserRepository
-     */
+    /** @var UserRepository */
     private $userRepository;
+    /** @var RouterInterface */
+    private $router;
 
     /**
      * LoginFormAuthenticator constructor.
      *
-     * @param UserRepository $userRepository
+     * @param UserRepository  $userRepository
+     * @param RouterInterface $router
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, RouterInterface $router)
     {
         $this->userRepository = $userRepository;
+        $this->router = $router;
     }
 
     /**
@@ -39,7 +42,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     {
         dump(($request->attributes->get('_route') && $request->isMethod('POST')));
 
-        return 'login' === $request->attributes->get('_route') && $request->isMethod('POST');
+        return 'app_login' === $request->attributes->get('_route') && $request->isMethod('POST');
     }
 
     /**
@@ -89,10 +92,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      * @param Request        $request
      * @param TokenInterface $token
      * @param string         $providerKey The provider (i.e. firewall) key
+     *
+     * @return RedirectResponse
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        dd('success !');
+        return new RedirectResponse($this->router->generate('app_homepage'));
     }
 
     /**
