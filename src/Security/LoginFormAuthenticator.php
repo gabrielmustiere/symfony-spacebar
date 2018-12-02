@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
@@ -52,10 +53,15 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        return [
+        $credentials = [
             'email' => $request->request->get('email'),
             'password' => $request->request->get('password'),
         ];
+
+        $request->getSession()
+            ->set(Security::LAST_USERNAME, $credentials['email']);
+
+        return $credentials;
     }
 
     /**
@@ -73,7 +79,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      * @param mixed         $credentials
      * @param UserInterface $user
      *
-     * @return bool|void
+     * @return bool
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
@@ -107,6 +113,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      */
     protected function getLoginUrl()
     {
-        // TODO: Implement getLoginUrl() method.
+        return $this->router->generate('app_login');
     }
 }
