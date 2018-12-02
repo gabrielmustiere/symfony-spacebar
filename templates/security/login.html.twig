@@ -19,6 +19,10 @@
               action="{{ path('app_login') }}"
               method="post">
 
+          <input type="hidden"
+                 name="_csrf_token"
+                 value="{{ csrf_token('authenticate') }}">
+
           {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
           {% endif %}
