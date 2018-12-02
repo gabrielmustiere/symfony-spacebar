@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -15,34 +16,54 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
     /**
-     * @param Request $request
-     *
-     * @return bool|void
+     * @var UserRepository
      */
-    public function supports(Request $request)
+    private $userRepository;
+
+    /**
+     * LoginFormAuthenticator constructor.
+     *
+     * @param UserRepository $userRepository
+     */
+    public function __construct(UserRepository $userRepository)
     {
-        die('Our authenticator is alive!');
+        $this->userRepository = $userRepository;
     }
 
     /**
      * @param Request $request
      *
-     * @return mixed|void
+     * @return bool
+     */
+    public function supports(Request $request)
+    {
+        dump(($request->attributes->get('_route') && $request->isMethod('POST')));
+
+        return 'login' === $request->attributes->get('_route') && $request->isMethod('POST');
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return array
      */
     public function getCredentials(Request $request)
     {
-        // todo
+        return [
+            'email' => $request->request->get('email'),
+            'password' => $request->request->get('password'),
+        ];
     }
 
     /**
      * @param mixed                 $credentials
      * @param UserProviderInterface $userProvider
      *
-     * @return UserInterface|void|null
+     * @return \App\Entity\User|null
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        // todo
+        return $this->userRepository->findOneBy(['email' => $credentials['email']]);
     }
 
     /**
@@ -53,25 +74,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
-        // todo
-    }
-
-    /**
-     * @return bool|void
-     */
-    public function supportsRememberMe()
-    {
-        // todo
-    }
-
-    /**
-     * Return the URL to the login page.
-     *
-     * @return string
-     */
-    protected function getLoginUrl()
-    {
-        // TODO: Implement getLoginUrl() method.
+        return true;
     }
 
     /**
@@ -86,11 +89,19 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      * @param Request        $request
      * @param TokenInterface $token
      * @param string         $providerKey The provider (i.e. firewall) key
-     *
-     * @return Response|null
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        // TODO: Implement onAuthenticationSuccess() method.
+        dd('success !');
+    }
+
+    /**
+     * Return the URL to the login page.
+     *
+     * @return string
+     */
+    protected function getLoginUrl()
+    {
+        // TODO: Implement getLoginUrl() method.
     }
 }
