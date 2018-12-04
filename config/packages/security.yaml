@@ -6,6 +6,12 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+
+
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+
     firewalls:
 
         dev:
