@@ -53,7 +53,7 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route(name="article_show", path="/news/{slug}")
+     * @Route(name="app_article_show", path="/news/{slug}")
      *
      * @param Request     $request
      * @param SlackClient $slack
@@ -80,7 +80,7 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route(name="article_toogle_heart", path="/news/{slug}/heart", methods={"POST"})
+     * @Route(name="app_article_toogle_heart", path="/news/{slug}/heart", methods={"POST"})
      *
      * @param Article                $article
      * @param LoggerInterface        $logger
