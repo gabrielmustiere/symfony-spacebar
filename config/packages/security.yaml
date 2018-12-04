@@ -1,33 +1,38 @@
 security:
 
-    providers:
+  providers:
 
-        app_user_provider:
-            entity:
-                class: App\Entity\User
-                property: email
+    app_user_provider:
+      entity:
+        class: App\Entity\User
+        property: email
 
 
-    encoders:
-        App\Entity\User:
-            algorithm: bcrypt
+  encoders:
+    App\Entity\User:
+      algorithm: bcrypt
 
-    firewalls:
+  firewalls:
 
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
 
-        main:
-            anonymous: true
-            guard:
-                authenticators:
-                    - App\Security\LoginFormAuthenticator
-            logout:
-                path: app_logout
-            remember_me:
-                secret: '%kernel.secret%'
-                lifetime: 2592000
+    main:
+      anonymous: true
+      guard:
+        authenticators:
+          - App\Security\LoginFormAuthenticator
+      logout:
+        path: app_logout
+      remember_me:
+        secret: '%kernel.secret%'
+        lifetime: 2592000
 
-    access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN }
+  access_control:
+  # but, definitely allow /login to be accessible anonymously
+  #        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+  #        - { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }
+  # if you wanted to force EVERY URL to be protected
+  # - { path: ^/admin, roles: ROLE_ADMIN }
+  # - { path: ^/profile, roles: ROLE_USER }

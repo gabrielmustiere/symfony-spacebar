@@ -38,7 +38,7 @@
           {% for comment in pagination %}
             <tr>
               <td>
-                <a href="{{ path('article_show', {'slug': comment.article.slug}) }}">
+                <a href="{{ path('app_article_show', {'slug': comment.article.slug}) }}">
                   {{ comment.article.title }}
                 </a>
               </td>
