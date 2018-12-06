@@ -22,7 +22,7 @@ class AccountController extends BaseController
      */
     public function index(LoggerInterface $logger)
     {
-        $logger->error('Checking account page for '.$this->getUser()
+        $logger->debug('Checking account page for '.$this->getUser()
                 ->getEmail());
 
         return $this->render('account/index.html.twig', [

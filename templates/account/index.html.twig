@@ -16,7 +16,7 @@
         <div class="row spacepurplebg white">
           <div class="col-md-2 no-pad">
             <div class="user-image">
-              <img src="https://robohash.org/{{ app.user.email }}"
+              <img src="{{ app.user.avatarUrl }}"
                    class="img-responsive thumbnail">
             </div>
           </div>
@@ -24,8 +24,10 @@
             <div class="user-pad">
               <h3>Welcome back, {{ app.user.firstName }}</h3>
               <h4 class="white">
-                <i class="fa fa-twitter"></i>
-                ?????
+                {% if app.user.twitterUsername %}
+                  <i class="fa fa-twitter"></i>
+                {% endif %}
+                {{ app.user.twitterUsername }}
               </h4>
               <a class="btn btn-labeled btn-info"
                  href="#">
