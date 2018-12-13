@@ -30,6 +30,7 @@ class MarkdownHelper
      * @param MarkdownInterface $markdown
      * @param LoggerInterface   $markdownLogger
      * @param bool              $isDebug
+     * @param Security          $security
      */
     public function __construct(AdapterInterface $cache, MarkdownInterface $markdown, LoggerInterface $markdownLogger, bool $isDebug, Security $security)
     {

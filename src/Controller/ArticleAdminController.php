@@ -23,6 +23,8 @@ class ArticleAdminController extends AbstractController
      *
      * @param EntityManagerInterface $entityManager
      *
+     * @throws \Exception
+     *
      * @return Response
      */
     public function new(EntityManagerInterface $entityManager)
@@ -44,15 +46,15 @@ strip steak pork belly aliquip capicola officia. Labore deserunt esse chicken lo
 cow est ribeye adipisicing. Pig hamburger pork belly enim. Do porchetta minim capicola irure pancetta chuck
 fugiat.
 EOF
-            );
+        );
 
         if (rand(1, 10) > 2) {
             $article->setPublishedAt(new \DateTime(sprintf('-%d days', rand(1, 100))));
         }
 
         $article->setAuthor('Gabriel Mustiere')
-                ->setHeartCount(rand(5, 100))
-                ->setImageFilename('asteroid.jpeg');
+            ->setHeartCount(rand(5, 100))
+            ->setImageFilename('asteroid.jpeg');
 
         $entityManager->persist($article);
         $entityManager->flush();

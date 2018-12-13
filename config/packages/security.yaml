@@ -7,6 +7,8 @@ security:
         class: App\Entity\User
         property: email
 
+  role_hierarchy:
+    ROLE_ADMIN : [ROLE_ADMIN_COMMENT, ROLE_ADMIN_ARTICLE, ROLE_ALLOWED_TO_SWITCH]
 
   encoders:
     App\Entity\User:
@@ -28,6 +30,7 @@ security:
       remember_me:
         secret: '%kernel.secret%'
         lifetime: 2592000
+      switch_user: true
 
   access_control:
   # but, definitely allow /login to be accessible anonymously
