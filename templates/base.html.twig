@@ -46,13 +46,20 @@
     </button>
     <div class="collapse navbar-collapse"
          id="navbarNavDropdown">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav ml-auto">
 
             {% if not is_granted('ROLE_USER') %}
                 <li class="nav-item">
                     <a style="color: #fff;"
                        class="nav-link"
                        href="{{ path('app_login') }}">Login </a>
+                </li>
+                <li class="nav-item">
+                    <a style="color: #fff;" class="nav-link" href="{{ path('app_register') }}">Register</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a style="color: #fff;" class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                 </li>
             {% endif %}
 

@@ -2,8 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Security\LoginFormAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 /**
@@ -11,6 +16,38 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
  */
 class SecurityController extends AbstractController
 {
+    /**
+     * @Route("/register", name="app_register")
+     *
+     * @param Request                      $request
+     * @param UserPasswordEncoderInterface $userPasswordEncoder
+     * @param GuardAuthenticatorHandler    $guardAuthenticatorHandler
+     * @param LoginFormAuthenticator       $loginFormAuthenticator
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function register(
+        Request $request,
+        UserPasswordEncoderInterface $userPasswordEncoder,
+        GuardAuthenticatorHandler $guardAuthenticatorHandler,
+        LoginFormAuthenticator $loginFormAuthenticator
+    ) {
+        if ($request->isMethod('POST')) {
+            $user = new User();
+            $user->setEmail($request->request->get('email'));
+            $user->setPassword($userPasswordEncoder->encodePassword($user, $request->request->get('password')));
+            $user->setFirstName('Mystery');
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            return $guardAuthenticatorHandler->authenticateUserAndHandleSuccess($user, $request, $loginFormAuthenticator, 'main');
+        }
+
+        return $this->render('security/register.html.twig');
+    }
+
     /**
      * @Route("/login", name="app_login")
      *
