@@ -43,7 +43,9 @@ class ArticleAdminController extends AbstractController
             $entityManager->persist($article);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_homepage');
+            $this->addFlash('success', 'Article created !');
+
+            return $this->redirectToRoute('app_admin_article_list');
         }
 
         return $this->render('article_admin/new.html.twig', ['articleForm' => $form->createView()]);
