@@ -26,6 +26,9 @@ class ArticleFormType extends AbstractType
             ])
             ->add('content', TextareaType::class, [
                 'help' => 'Write beautiful thing',
+            ])
+            ->add('publishedAt', null, [
+                'widget' => 'single_text',
             ]);
     }
 
