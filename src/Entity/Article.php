@@ -169,6 +169,14 @@ class Article
     }
 
     /**
+     * @return bool
+     */
+    public function isPublished(): bool
+    {
+        return null !== $this->publishedAt;
+    }
+
+    /**
      * @return int|null
      */
     public function getHeartCount(): ?int
