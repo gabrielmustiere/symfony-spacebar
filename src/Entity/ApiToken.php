@@ -87,8 +87,6 @@ class ApiToken
      */
     public function isExpired(): bool
     {
-        return true;
-
         return $this->getExpiresAt() <= new \DateTime();
     }
 

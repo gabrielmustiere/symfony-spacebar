@@ -82,11 +82,11 @@ class ApiTokenAuthenticator extends AbstractGuardAuthenticator
      * @param mixed         $credentials
      * @param UserInterface $user
      *
-     * @return bool|void
+     * @return bool
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
-        // todo
+        return true;
     }
 
     /**
