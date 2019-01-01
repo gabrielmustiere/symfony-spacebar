@@ -30,6 +30,7 @@ class ArticleFormType extends AbstractType
                 'help' => 'Write beautiful thing',
             ])
             ->add('publishedAt', null, [
+                'help' => 'When do you want to publish the article',
                 'widget' => 'single_text',
             ])
             ->add('author', EntityType::class, [
