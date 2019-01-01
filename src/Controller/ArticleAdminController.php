@@ -21,6 +21,7 @@ class ArticleAdminController extends AbstractController
 {
     /**
      * @Route(name="app_admin_article_new", path="/admin/article/new")
+     * @IsGranted("ROLE_ADMIN_ARTICLE")
      *
      * @param Request                $request
      * @param EntityManagerInterface $entityManager
@@ -51,6 +52,41 @@ class ArticleAdminController extends AbstractController
     }
 
     /**
+     * @Route(name="app_admin_article_edit", path="/admin/article/{id}/edit")
+     * @IsGranted("ROLE_ADMIN_ARTICLE")
+     *
+     * @param Article                $article
+     * @param Request                $request
+     * @param EntityManagerInterface $entityManager
+     *
+     * @return Response
+     */
+    public function edit(Article $article, Request $request, EntityManagerInterface $entityManager)
+    {
+        $form = $this->createForm(ArticleFormType::class, $article);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var Article $data */
+            $article = $form->getData();
+            $article->setAuthor($this->getUser());
+            $article->setImageFilename('asteroid.jpeg');
+            $entityManager->persist($article);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Article updated !');
+
+            return $this->redirectToRoute('app_admin_article_edit', [
+                'id' => $article->getId(),
+            ]);
+        }
+
+        return $this->render('article_admin/edit.html.twig', ['articleForm' => $form->createView()]);
+    }
+
+    /**
      * @Route(name="app_admin_article_list", path="/admin/article")
      *
      * @param ArticleRepository $articleRepository
@@ -62,17 +98,5 @@ class ArticleAdminController extends AbstractController
         $articles = $articleRepository->findAll();
 
         return $this->render('article_admin/list.html.twig', ['articles' => $articles]);
-    }
-
-    /**
-     * @Route(name="app_admin_article_edit",path="/admin/article/{id}/edit")
-     *
-     * @IsGranted("MANAGE", subject="article")
-     *
-     * @param Article $article
-     */
-    public function edit(Article $article)
-    {
-        dd($article);
     }
 }
