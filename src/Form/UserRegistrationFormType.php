@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -25,7 +26,6 @@ class UserRegistrationFormType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('agreedTermsAt', CheckboxType::class)
             ->add('plainPassword', PasswordType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -36,12 +36,21 @@ class UserRegistrationFormType extends AbstractType
                         'min' => 5,
                         'minMessage' => 'The password must be 5 characters min length',
                     ]),
-                    new Regex([
-                        'pattern' => '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
-                        'message' => 'The password must be contains at least 1 upper, 1 lower, 1 number & 1 special character',
+                    //new Regex([
+                    //    'pattern' => '""^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"',
+                    //    'message' => 'The password must be contains at least 1 upper, 1 lower, 1 number & 1 special character',
+                    //]),
+                ],
+            ])
+            ->add('agreedTermsAt', CheckboxType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'I know, it\'s silly, but you must agree to our terms .',
                     ]),
                 ],
-            ]);
+            ])
+            ;
     }
 
     /**

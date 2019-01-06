@@ -25,6 +25,8 @@ class SecurityController extends AbstractController
      * @param GuardAuthenticatorHandler    $guardAuthenticatorHandler
      * @param LoginFormAuthenticator       $loginFormAuthenticator
      *
+     * @throws \Exception
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function register(
@@ -42,6 +44,10 @@ class SecurityController extends AbstractController
             $user = $form->getData();
 
             $user->setPassword($userPasswordEncoder->encodePassword($user, $request->request->get('plainPassword')));
+
+            if (true === $form['agreeTerms']->getData()) {
+                $user->agreeToTerms();
+            }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

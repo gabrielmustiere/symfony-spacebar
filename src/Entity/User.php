@@ -68,6 +68,9 @@ class User implements UserInterface
      */
     private $agreedTermsAt;
 
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         $this->apiTokens = new ArrayCollection();
@@ -235,6 +238,11 @@ class User implements UserInterface
         return $this->apiTokens;
     }
 
+    /**
+     * @param ApiToken $apiToken
+     *
+     * @return User
+     */
     public function addApiToken(ApiToken $apiToken): self
     {
         if (!$this->apiTokens->contains($apiToken)) {
@@ -245,6 +253,11 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param ApiToken $apiToken
+     *
+     * @return User
+     */
     public function removeApiToken(ApiToken $apiToken): self
     {
         if ($this->apiTokens->contains($apiToken)) {
@@ -266,6 +279,11 @@ class User implements UserInterface
         return $this->articles;
     }
 
+    /**
+     * @param Article $article
+     *
+     * @return User
+     */
     public function addArticle(Article $article): self
     {
         if (!$this->articles->contains($article)) {
@@ -276,6 +294,11 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param Article $article
+     *
+     * @return User
+     */
     public function removeArticle(Article $article): self
     {
         if ($this->articles->contains($article)) {
@@ -289,15 +312,31 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getAgreedTermsAt(): ?\DateTimeInterface
     {
         return $this->agreedTermsAt;
     }
 
+    /**
+     * @param \DateTimeInterface $agreedTermsAt
+     *
+     * @return User
+     */
     public function setAgreedTermsAt(\DateTimeInterface $agreedTermsAt): self
     {
         $this->agreedTermsAt = $agreedTermsAt;
 
         return $this;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function agreeToTerms()
+    {
+        $this->agreedTermsAt = new \DateTime();
     }
 }
