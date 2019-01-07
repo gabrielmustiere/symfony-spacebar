@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use function sprintf;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -75,6 +76,14 @@ class User implements UserInterface
     {
         $this->apiTokens = new ArrayCollection();
         $this->articles = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return sprintf('(%s) - %s', $this->getId(), $this->getEmail());
     }
 
     /**

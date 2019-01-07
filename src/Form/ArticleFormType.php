@@ -3,9 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Article;
-use App\Entity\User;
 use App\Repository\UserRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -47,15 +45,7 @@ class ArticleFormType extends AbstractType
                 'help' => 'When do you want to publish the article',
                 'widget' => 'single_text',
             ])
-            ->add('author', EntityType::class, [
-                'class' => User::class,
-                'placeholder' => 'Choose an author',
-                'choices' => $this->userRepository->findAllEmailAlphabetical(),
-                'invalid_message' => 'Symfony is too smart for your hacking',
-                'choice_label' => function (User $user) {
-                    return sprintf('(%d) %s', $user->getId(), $user->getEmail());
-                },
-            ]);
+            ->add('author', UserSelectedTextType::class);
     }
 
     /**
