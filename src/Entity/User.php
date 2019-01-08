@@ -79,14 +79,6 @@ class User implements UserInterface
     }
 
     /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return sprintf('(%s) - %s', $this->getId(), $this->getEmail());
-    }
-
-    /**
      * @return int|null
      */
     public function getId(): ?int

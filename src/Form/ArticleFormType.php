@@ -45,7 +45,7 @@ class ArticleFormType extends AbstractType
                 'help' => 'When do you want to publish the article',
                 'widget' => 'single_text',
             ])
-            ->add('author', UserSelectedTextType::class);
+            ->add('author', UserSelectTextType::class);
     }
 
     /**
