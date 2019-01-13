@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Article;
 use App\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -41,7 +42,7 @@ class ArticleFormType extends AbstractType
             ->add('content', TextareaType::class, [
                 'help' => 'Write beautiful thing',
             ])
-            ->add('publishedAt', null, [
+            ->add('publishedAt', DateTimeType::class, [
                 'help' => 'When do you want to publish the article',
                 'widget' => 'single_text',
             ])

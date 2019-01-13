@@ -71,7 +71,6 @@ class ArticleAdminController extends AbstractController
 
             /** @var Article $data */
             $article = $form->getData();
-            $article->setAuthor($this->getUser());
             $article->setImageFilename('asteroid.jpeg');
             $entityManager->persist($article);
             $entityManager->flush();
