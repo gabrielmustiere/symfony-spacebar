@@ -24,7 +24,7 @@ class UserAdminController extends AbstractController
      */
     public function getUsersApi(UserRepository $userRepository, Request $request)
     {
-        $users = $userRepository->findAllMatching($request->request->get('query'));
+        $users = $userRepository->findAllMatching($request->query->get('query'));
 
         return $this->json([
             'users' => $users,

@@ -15,7 +15,7 @@
 }
 .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
     cursor: pointer;
-    padding: 5px 4px;
+    padding: -4px -2px;
 }
 .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
     background-color: #B2D7FF;
