@@ -1,0 +1,20 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col">
+
+        <h1>Ressource is forbidden</h1>
+
+        <p>
+          The ressource page is forbidden. Please contact the administrator and
+          <a href="{{ path('app_homepage') }}">return to the homepage</a>
+          .
+        </p>
+      </div>
+    </div>
+  </div>
+{% endblock %}

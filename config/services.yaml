@@ -1,0 +1,24 @@
+parameters:
+    cache_adapter: 'cache.adapter.filesystem'
+
+    locale: 'en'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+        bind :
+            $markdownLogger : '@monolog.logger.markdown'
+            $isDebug : '%kernel.debug%'
+            Nexy\Slack\Client: '@nexy_slack.client'
+
+
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']

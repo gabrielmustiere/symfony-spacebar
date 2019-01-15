@@ -1,0 +1,15 @@
+framework:
+    secret: '%env(APP_SECRET)%'
+
+    translator: { fallback : '%locale%' }
+
+    session:
+        handler_id: ~
+
+    php_errors:
+        log: true
+
+    cache:
+        app: '%cache_adapter%'
+
+    ide: "phpstorm://open?file=%%f&line=%%l"
