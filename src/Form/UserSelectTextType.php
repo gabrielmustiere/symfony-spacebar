@@ -35,6 +35,14 @@ class UserSelectTextType extends AbstractType
     }
 
     /**
+     * @return string|null
+     */
+    public function getParent()
+    {
+        return TextType::class;
+    }
+
+    /**
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
@@ -48,14 +56,12 @@ class UserSelectTextType extends AbstractType
 
     /**
      * @param OptionsResolver $resolver
-     *
-     * @return OptionsResolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        return $resolver->setDefaults([
-            'invalid_message' => 'Hum... user not found',
-            'finder_callback' => function (UserRepository $userRepository, string $email) {
+        $resolver->setDefaults([
+            'invalid_message' => 'hum... user not found',
+            'finder_callback' => function (UserRepository $userRepository, string $email = null) {
                 return $userRepository->findOneBy(['email' => $email]);
             },
             'attr' => [
@@ -63,13 +69,5 @@ class UserSelectTextType extends AbstractType
                 'data-autocomplete-url' => $this->router->generate('app_admin_api_users'),
             ],
         ]);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getParent()
-    {
-        return TextType::class;
     }
 }
