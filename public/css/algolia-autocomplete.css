@@ -8,14 +8,15 @@
     color: #999;
 }
 .algolia-autocomplete .aa-dropdown-menu {
-    width: 100%;
     background-color: #fff;
     border: 1px solid #999;
     border-top: none;
+    width: 100%;
 }
 .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+    padding: 6px 12px;
     cursor: pointer;
-    padding: -4px -2px;
+    height: 35px;
 }
 .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
     background-color: #B2D7FF;
