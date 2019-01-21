@@ -8,7 +8,7 @@ php bin/console doctrine:fixtures:load -q
 php bin/console server:run
 ```
 
-## Run Panter tests
+## Run Panther tests
 
 ### Without chrome
 ```
