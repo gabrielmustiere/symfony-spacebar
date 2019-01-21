@@ -63,6 +63,10 @@ class EmailToUserTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
+        if (!$value) {
+            return;
+        }
+        
         $callBack = $this->finderCallback;
         $user = $callBack($this->userRepository, $value);
 
